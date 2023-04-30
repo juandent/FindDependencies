@@ -18,13 +18,20 @@ int main(int argc, char* argv[])
 
     DirectoryExplorer explorer;
     explorer.Execute(directory);
-    //bool has_cycles = explorer.Dependencies();
 
-    // SortModules sorter(Vertex::all_vertices, Module::all_modules);
-    // sorter.Sort();
+    TopologicalSort sorter;
 
-    //std::cout << std::format("{} cycles", has_cycles ? "Has" : "Has no") << std::endl;
 
-    TestInitial();
+    for (auto& mod : Module::all_modules)
+    {
+        // is mod in Vertex::all_vertices
+        auto ret = Vertex::find(mod);
+        assert(ret.get() != nullptr);
+    }
+
+    sorter.Execute();
+    sorter.PrintOrderedVertices();
+    sorter.Verify();
+
 }
 
