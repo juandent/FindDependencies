@@ -218,11 +218,13 @@ public:
 	{
 		for (auto& vertice : Vertex::ordered_vertices)
 		{
-			auto root_pos = print_position(vertice, "root");
+			auto root_pos = get_position(vertice); // print_position(vertice, "root");
 			for (auto& deps : vertice->dependencies)
 			{
-				auto deps_pos = print_position(deps, "deps");
+				auto deps_pos = get_position(deps);
 				auto dist = std::distance(root_pos, deps_pos);
+				auto str = std::format("{0:4} root: '{1:15}' dep: '{2:15}'", dist, vertice->module->name, deps->module->name);
+				cout << str << endl; 
 				assert(dist >= 0);
 			}
 		}
